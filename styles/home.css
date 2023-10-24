@@ -86,12 +86,14 @@
     width: 30%;
     overflow: hidden;
     margin: auto;
+    float: right;
 }
 
 .topnav a {
     color: #f2f2f2;
     text-align: center;
     padding: 14px 16px;
+    margin-left: 3%;
     text-decoration: none;
     font-size: 2vw;
 }
