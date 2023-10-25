@@ -162,7 +162,7 @@
 
 #play-btn a {
     text-decoration: none;
-    padding: 0.5vw;
+    padding: 1vw;
     border-left: solid 3px red;
     border-right: solid 3px blue;
     border-radius: 5px 20px 5px 20px;
@@ -249,6 +249,10 @@
             position: absolute;
             top: 0;
             right: 0;
+        }
+
+        #play-btn a {
+            padding: 2vw;
         }
     }
 }
