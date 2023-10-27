@@ -1,0 +1,53 @@
+.menu {
+    text-align: left;
+}
+
+#logo {
+    margin-left: 50px;
+    width: 100%;
+    color: black;
+    font-size: large;
+}
+
+#backBtn {
+    text-align: left;
+    margin: 5%;
+}
+
+#backBtn a {
+    text-decoration: none;
+    padding: 1vw;
+    border-left: solid 3px red;
+    border-right: solid 3px blue;
+    border-radius: 5px 20px 5px 20px;
+    background-color: green;
+    color: white;
+}
+
+#backBtn a:hover {
+    color: aqua;
+    background-color: #333;
+    border-radius: 20px 5px 20px 5px;
+    border-top: solid 3px red;
+    border-bottom: solid 3px blue;
+    border-left: none;
+    border-right: none;
+}
+
+.game {
+    width: 80%;
+    margin-top: 101px;
+    background-color: aqua;
+}
+
+#jungleman_canvas {
+    margin-top: 101px;
+    background-color: lightblue;
+    position: absolute;
+    border: 3px solid white;
+    width: 800px;
+    height: 700px;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+}
