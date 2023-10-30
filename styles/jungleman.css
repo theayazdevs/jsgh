@@ -35,16 +35,16 @@
 }
 
 .game {
-    width: 80%;
     margin-top: 101px;
+    /*background-image: url(../assets/images/jungleman.png);*/
+    height: 1000px;
 }
 
-.jungleman_canvas {
+.jungleman {
     width: 1280px;
     height: 480px;
     border: 1px solid black;
+    /*background: url(../assets/images/jungleman/back.png);*/
     border-top: none;
-    background-color: rebeccapurple;
-    display: none;
     margin: 0 auto;
 }
