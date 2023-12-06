@@ -15,9 +15,29 @@
     </div>
 
     <div class="game">
-        <canvas class="jungleman">
+        <canvas id="canvas1">
         </canvas>
+        <div class="controls">
+            <label for="animations">Choose animations:</label>
+            <select id="animations" name="animations">
+                <option value="idle">IDLE</option>
+                <option value="jump">JUMP</option>
+                <option value="fall">FALL</option>
+                <option value="run">RUN</option>
+                <option value="dizzy">DIZZY</option>
+                <option value="sit">SIT</option>
+                <option value="bite">BITE</option>
+                <option value="ko">KO</option>
+                <option value="getHit">GET HIT</option>
+            </select>
+        </div>
+        <div id="container">
+            <p>Game Speed:<span id="showGameSpeed"></span></p>
+            <input type="range" min="0" max="10" value="5" class="slider" id="slider">
+        </div>
+
     </div>
+
 
     <script src="../js//jungleman_scripts/JunglemanGame.js"></script>
 </body>
