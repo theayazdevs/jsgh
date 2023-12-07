@@ -1,3 +1,5 @@
+//to make VS CODE suggest canvas methods
+/** @type {HTMLCanvasElement} */
 const canvas = document.getElementById("canvas1");
 //context
 const ctx = canvas.getContext("2d");
@@ -128,11 +130,12 @@ function animate() {
   //runs the function passed
   requestAnimationFrame(animate);
 }
-animate();
+//animate();
 
 //  PARALLAX ---------------------------------------------------------------------------------------------------------------
 // let is used when value is to be reassigned
 let gameSpeed = 5;
+//let gameFrameP = 0;
 //bringing layers into the project
 const backgroundLayer1 = new Image();
 backgroundLayer1.src = "../assets/images/jungleman/parallax/layer-1.png";
@@ -145,58 +148,182 @@ backgroundLayer4.src = "../assets/images/jungleman/parallax/layer-4.png";
 const backgroundLayer5 = new Image();
 backgroundLayer5.src = "../assets/images/jungleman/parallax/layer-5.png";
 
-const slider = document.getElementById("slider");
-slider.value = gameSpeed;
-const showGameSpeed = document.getElementById("showGameSpeed");
-showGameSpeed.innerHTML = gameSpeed;
-slider.addEventListener("change", function (e) {
-  console.log(e.target.value);
-  gameSpeed = e.target.value;
-  showGameSpeed.innerHTML = e.target.value;
+//make sure all images are loaded before starting the game
+window.addEventListener("load", function () {
+  const slider = document.getElementById("slider");
+  slider.value = gameSpeed;
+  const showGameSpeed = document.getElementById("showGameSpeed");
+  showGameSpeed.innerHTML = gameSpeed;
+  slider.addEventListener("change", function (e) {
+    console.log(e.target.value);
+    gameSpeed = e.target.value;
+    showGameSpeed.innerHTML = e.target.value;
+  });
+
+  //custom class
+  class Layer {
+    constructor(image, speedModifier) {
+      this.x = 0;
+      this.y = 0;
+      this.width = 2400;
+      this.height = 700;
+      //this.x2 = this.width;
+      this.image = image;
+      this.speedModifier = speedModifier;
+      this.speed = gameSpeed * this.speedModifier;
+    }
+    update() {
+      this.speed = gameSpeed * this.speedModifier;
+      if (this.x <= -this.width) {
+        //this.x = this.width + this.x2 - this.speed;
+        //this.x = this.width - this.speed;
+        this.x = 0;
+      }
+      /*if (this.x2 <= -this.width) {
+        this.x2 = this.width + this.x - this.speed;
+      }*/
+      //this.x = Math.floor(this.x - this.speed);
+      //this.x = this.x - this.speed;
+      //this.x2 = Math.floor(this.x2 - this.speed);
+      //to replace the code above, but the issue is that the animation is not that accurate
+      //a cycle from 0 to the width
+      //this.x = (gameFrameP * this.speed) % this.width;
+      this.x = this.x - this.speed;
+    }
+    draw() {
+      ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
+      //ctx.drawImage(this.image, this.x2, this.y, this.width, this.height);
+      ctx.drawImage(
+        this.image,
+        this.x + this.width,
+        this.y,
+        this.width,
+        this.height
+      );
+    }
+  }
+  const layer1 = new Layer(backgroundLayer1, 0.2);
+  const layer2 = new Layer(backgroundLayer2, 0.4);
+  const layer3 = new Layer(backgroundLayer3, 0.6);
+  const layer4 = new Layer(backgroundLayer4, 0.8);
+  const layer5 = new Layer(backgroundLayer5, 1);
+
+  const gameObjects = [layer1, layer2, layer3, layer4, layer5];
+
+  function animateParallax() {
+    ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+    gameObjects.forEach((obj) => {
+      obj.update();
+      obj.draw();
+    });
+    //gameFrameP--;
+    requestAnimationFrame(animateParallax);
+  }
+  //animateParallax();
 });
 
-//custom class
-class Layer {
-  constructor(image, speedModifier) {
-    this.x = 0;
-    this.y = 0;
-    this.width = 2400;
-    this.height = 700;
-    this.x2 = this.width;
-    this.image = image;
-    this.speedModifier = speedModifier;
-    this.speed = gameSpeed * this.speedModifier;
+//  ENEMIES  ---------------------------------------------------------------------------------------------------------------
+
+//images
+/*const enemyImage = new Image();
+enemyImage.src = "../assets/images/jungleman/enemies/enemy1.png";*/
+let gameFrameE = 0;
+
+//blueprint
+/*enemy1 = {
+  x: 10,
+  y: 50,
+  width: 100,
+  height: 100,
+};*/
+class Enemy {
+  constructor() {
+    this.image = new Image();
+    this.image.src = "../assets/images/jungleman/enemies/enemy1.png";
+    //this.speed = Math.random() * 4 - 2;
+    this.spriteWidthE = 293;
+    this.spriteHeightE = 155;
+    this.width = this.spriteWidthE / 2.5;
+    this.height = this.spriteHeightE / 2.5;
+    //this.x = 10;
+    this.x = Math.random() * (canvas.width - this.width);
+    //this.y = 50;
+    this.y = Math.random() * (canvas.height - this.height);
+    this.frame = 0;
+    this.flapSpeed = Math.floor(Math.random() * 3 + 1);
   }
   update() {
-    this.speed = gameSpeed * this.speedModifier;
-    if (this.x <= -this.width) {
-      this.x = this.width + this.x2 - this.speed;
+    //horizontal
+    //this.x++;
+    //this.x += this.speed;
+    this.x += Math.random() * 5 - 2.5;
+    ///vertical
+    //this.y++;
+    //this.y += this.speed;
+    this.y += Math.random() * 5 - 2.5;
+    //this.frame > 4 ? (this.frame = 0) : this.frame++;
+    /*if (gameFrameE % 2 === 0) {
+      this.frame > 4 ? (this.frame = 0) : this.frame++;
+    }*/
+    if (gameFrameE % this.flapSpeed === 0) {
+      this.frame > 4 ? (this.frame = 0) : this.frame++;
     }
-    if (this.x2 <= -this.width) {
-      this.x2 = this.width + this.x - this.speed;
-    }
-    this.x = Math.floor(this.x - this.speed);
-    this.x2 = Math.floor(this.x2 - this.speed);
   }
   draw() {
-    ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
-    ctx.drawImage(this.image, this.x2, this.y, this.width, this.height);
+    //ctx.fillRect(enemy1.x, enemy1.y, enemy1.width, enemy1.height);
+    //ctx.fillRect(this.x, this.y, this.width, this.height);
+    //ctx.strokeRect(this.x, this.y, this.width, this.height);
+    /*ctx.drawImage(
+      enemyImage,
+      0,
+      0,
+      this.spriteWidthE,
+      this.spriteHeightE,
+      this.x,
+      this.y,
+      this.width,
+      this.height
+    );*/
+    /*ctx.drawImage(
+      enemyImage,
+      this.frame * this.spriteWidthE,
+      0,
+      this.spriteWidthE,
+      this.spriteHeightE,
+      this.x,
+      this.y,
+      this.width,
+      this.height
+    );*/
+    ctx.drawImage(
+      this.image,
+      this.frame * this.spriteWidthE,
+      0,
+      this.spriteWidthE,
+      this.spriteHeightE,
+      this.x,
+      this.y,
+      this.width,
+      this.height
+    );
   }
 }
-const layer1 = new Layer(backgroundLayer1, 0.2);
-const layer2 = new Layer(backgroundLayer2, 0.4);
-const layer3 = new Layer(backgroundLayer3, 0.6);
-const layer4 = new Layer(backgroundLayer4, 0.8);
-const layer5 = new Layer(backgroundLayer5, 1);
-
-const gameObjects = [layer1, layer2, layer3, layer4, layer5];
-
-function animateParallax() {
-  ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-  gameObjects.forEach((obj) => {
-    obj.update();
-    obj.draw();
-  });
-  requestAnimationFrame(animateParallax);
+const numberOfEnemies = 100;
+const enemiesArray = [];
+//const enemy1 = new Enemy();
+for (let i = 0; i < numberOfEnemies; i++) {
+  enemiesArray.push(new Enemy());
 }
-animateParallax();
+console.log(enemiesArray);
+function animateE() {
+  ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+  //enemy1.update();
+  //enemy1.draw();
+  enemiesArray.forEach((enemy) => {
+    enemy.update();
+    enemy.draw();
+  });
+  gameFrameE++;
+  requestAnimationFrame(animateE);
+}
+animateE();
