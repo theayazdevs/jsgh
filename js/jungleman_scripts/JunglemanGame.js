@@ -20,9 +20,9 @@ let playerState = "idle";
 //options
 const dropdown = document.getElementById("animations");
 //listen for change
-dropdown.addEventListener("change", function (e) {
+/*dropdown.addEventListener("change", function (e) {
   playerState = e.target.value;
-});
+});*/
 //sprite animations
 const spriteAnimations = [];
 const animationStates = [
@@ -153,14 +153,14 @@ backgroundLayer5.src = "../assets/images/jungleman/parallax/layer-5.png";
 //make sure all images are loaded before starting the game
 window.addEventListener("load", function () {
   const slider = document.getElementById("slider");
-  slider.value = gameSpeed;
+  //slider.value = gameSpeed;
   const showGameSpeed = document.getElementById("showGameSpeed");
-  showGameSpeed.innerHTML = gameSpeed;
-  slider.addEventListener("change", function (e) {
+  //showGameSpeed.innerHTML = gameSpeed;
+  /*slider.addEventListener("change", function (e) {
     //console.log(e.target.value);
     gameSpeed = e.target.value;
     showGameSpeed.innerHTML = e.target.value;
-  });
+  });*/
 
   //custom class
   class Layer {
